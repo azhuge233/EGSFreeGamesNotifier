@@ -34,7 +34,7 @@ jobs:
       
     - name: Create Zip
       run: |
-        zip -qq -r EG-win-x64.zip win-x64/*
+        zip -qq -r EGS-win-x64.zip win-x64/*
       working-directory: bin/release
         
     - name: Create Release
