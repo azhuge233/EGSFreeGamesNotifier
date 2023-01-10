@@ -27,12 +27,6 @@ namespace EGSFreeGamesNotifier.Services {
 							continue;
 						}
 
-						if (oldRecords.Any(record => record.ID == game.ID)) {
-							result.Records.Add(oldRecords.First(record => record.ID == game.ID));
-							_logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title);
-							continue;
-						}
-
 						var newRecord = new FreeGameRecord() { 
 							Title = game.Title,
 							Name = GetProductSlug(game),
@@ -57,9 +51,14 @@ namespace EGSFreeGamesNotifier.Services {
 						}
 
 						result.Records.Add(newRecord);
-						result.NotifyRecords.Add(newRecord);
 
-						_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title);
+						if (!oldRecords.Any(record => record.ID == newRecord.ID)) {
+							_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title);
+							result.NotifyRecords.Add(newRecord);
+						} else if (oldRecords.First(record => record.ID == newRecord.ID).IsUpcomingPromotion != newRecord.IsUpcomingPromotion) {
+							_logger.LogInformation(ParseStrings.infoUpcomingGameIsLive, newRecord.Title);
+							result.NotifyRecords.Add(newRecord);
+						} else _logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title);
 					}
 				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
 

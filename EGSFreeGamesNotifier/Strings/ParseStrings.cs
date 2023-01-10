@@ -14,6 +14,8 @@
 		internal static readonly string debugGameNullPromotion = "Null promotion for game {0}";
 		internal static readonly string debugGameNoPromotion = "No promotion for game {0}";
 
+		internal static readonly string infoUpcomingGameIsLive = "Upcoming game is live: {0}";
+
 		internal static readonly string infoFoundNewGame = "Found new free game: {0}";
 		internal static readonly string debugFoundInOldRecords = "Found {0} in old records, stop adding to push list";
 		#endregion
