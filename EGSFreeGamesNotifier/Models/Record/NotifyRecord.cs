@@ -6,7 +6,10 @@ namespace EGSFreeGamesNotifier.Models.Record {
 	public class NotifyRecord: FreeGameRecord {
 		public NotifyRecord() { }
 
-		public NotifyRecord(FreeGameRecord record): base(record) { }
+		public NotifyRecord(FreeGameRecord record): base(record) {
+			if (Title == NotifyStrings.MysteryGameName && Title == Description) Url = NotifyStrings.EGSUrlPre;
+		}
+
 		private static string RemoveSpecialCharacters(string str) {
 			return Regex.Replace(str, NotifyStrings.removeSpecialCharsRegex, string.Empty);
 		}
