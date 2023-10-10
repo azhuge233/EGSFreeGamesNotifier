@@ -21,8 +21,7 @@ dotnet publish -c Release -p:PublishDir=/your/path/here -r [win-x64/osx-x64/...]
 
 Set your telegram bot token and chat ID in config.json.
 
-Check [
-SteamDB-FreeGames-dotnet wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-Description) for more config explanation, only notification releated varaibles are available for this project.
+Check [wiki](https://github.com/azhuge233/EGSFreeGamesNotifier/wiki) for more config explanation, only notification releated varaibles are available for this project.
 
 ### Repeatedly running
 
