@@ -66,6 +66,12 @@ namespace EGSFreeGamesNotifier.Services {
 					await services.GetRequiredService<QQ>().SendMessage(config, pushListFinal);
 				} else _logger.LogInformation(debugDisabledFormat, "QQ");
 
+				//QQ Red (Chronocat) notifications
+				if (config.EnableRed) {
+					_logger.LogInformation(debugEnabledFormat, "QQ Red (Chronocat)");
+					await services.GetRequiredService<QQRed>().SendMessage(config, pushListFinal);
+				} else _logger.LogInformation(debugDisabledFormat, "QQ Red (Chronocat)");
+
 				// PushPlus notifications
 				if (config.EnablePushPlus) {
 					_logger.LogInformation(debugEnabledFormat, "PushPlus");
