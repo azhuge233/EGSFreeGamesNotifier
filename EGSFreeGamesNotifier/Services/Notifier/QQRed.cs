@@ -57,7 +57,9 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 					Elements = new List<object>() {
 						new TextElementRoot() {
 							TextElement = new TextElement() {
-								Content = record.ToQQMessage()
+								Content = new StringBuilder().Append(record.ToQQMessage())
+															.Append(NotifyFormatStrings.projectLink)
+															.ToString()
 							}
 						}
 					}
