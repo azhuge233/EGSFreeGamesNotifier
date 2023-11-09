@@ -39,12 +39,14 @@ namespace EGSFreeGamesNotifier.Services {
 						if (game.Promotions.PromotionalOffers.Count > 0 && game.Promotions.PromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
 							var offer = game.Promotions.PromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
 							newRecord.StartTime = offer.StartDate.AddHours(8);
-							newRecord.EndTime = offer.EndDate.AddHours(8);
+							// handles end time null
+							newRecord.EndTime = !offer.EndDate.HasValue ? DateTime.MaxValue : offer.EndDate.Value.AddHours(8);
 						} else if (game.Promotions.UpcomingPromotionalOffers.Count > 0 && game.Promotions.UpcomingPromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
 							newRecord.IsUpcomingPromotion = true;
 							var offer = game.Promotions.UpcomingPromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
 							newRecord.StartTime = offer.StartDate.AddHours(8);
-							newRecord.EndTime = offer.EndDate.AddHours(8);
+							// handles end time null
+							newRecord.EndTime = !offer.EndDate.HasValue ? DateTime.MaxValue : offer.EndDate.Value.AddHours(8);
 						} else {
 							_logger.LogDebug(ParseStrings.debugGameNoPromotion, game.Title);
 							continue;

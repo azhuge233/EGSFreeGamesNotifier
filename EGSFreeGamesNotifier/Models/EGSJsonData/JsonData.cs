@@ -85,8 +85,10 @@ namespace EGSFreeGamesNotifier.Models.EGSJsonData {
 		[JsonPropertyName("startDate")]
 		public DateTime StartDate { get; set; }
 
+		// api response could be null
+		// DateTime can't be auto-resolved to null by json deserializer
 		[JsonPropertyName("endDate")]
-		public DateTime EndDate { get; set; }
+		public DateTime? EndDate { get; set; } 
 
 		[JsonPropertyName("discountSetting")]
 		public DiscountSetting_ DiscountSetting { get; set; }
