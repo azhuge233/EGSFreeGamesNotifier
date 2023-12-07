@@ -77,15 +77,22 @@ namespace EGSFreeGamesNotifier.Services {
 			}
 		}
 
-		private static string GetProductSlug(Element_ game) {
-			if(!string.IsNullOrEmpty(game.ProductSlug)) return game.ProductSlug;
+		private string GetProductSlug(Element_ game) {
+			string gameName = string.Empty;
+
+			if(!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
 			if (game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-				return game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+				gameName = game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
 			if (game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-				return game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+				gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
 			if (game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
-				return game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
-			return string.Empty;
+				gameName = game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
+			if (gameName == ParseStrings.MisteryGameName) {
+				gameName = game.UrlSlug;
+				_logger.LogDebug(ParseStrings.debugMisteryGameFound, gameName);
+			}
+
+			return gameName;
 		}
 
 		public void Dispose() { 
