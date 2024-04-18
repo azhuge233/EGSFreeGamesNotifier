@@ -31,6 +31,9 @@ namespace EGSFreeGamesNotifier.Models.EGSJsonData {
 		[JsonPropertyName("description")]
 		public string Description { get; set; }
 
+		[JsonPropertyName("offerType")]
+		public string OfferType { get; set; }
+
 		[JsonPropertyName("productSlug")]
 		public string ProductSlug { get; set; }
 

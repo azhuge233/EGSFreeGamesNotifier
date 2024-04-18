@@ -3,7 +3,22 @@
 		internal static readonly string UrlProductSlugPageType = "productHome";
 		internal static readonly string CustomAttrProductSlugKey = "com.epicgames.app.productSlug";
 
-		internal static readonly string EGSUrlPre = "https://store.epicgames.com/p/";
+		#region Free game offerTypes name
+		internal static readonly string OfferTypeBaseGame = "BASE_GAME";
+		internal static readonly string OfferTypeBundle = "BUNDLE";
+		internal static readonly string OfferTypeAddOn = "ADD_ON";
+		#endregion
+
+		internal static readonly string[] EGSUrlPres = [
+			"https://store.epicgames.com/p/",
+			"https://store.epicgames.com/p/",
+			"https://store.epicgames.com/bundles/"
+		];
+		internal static readonly Dictionary<string, int> OfferTypesToUrlPrefix = new() { 
+			{ OfferTypeBaseGame, 1 }, 
+			{ OfferTypeBundle, 2 }, 
+			{ OfferTypeAddOn, 1 } 
+		};
 
 		internal static readonly string MisteryGameName = "[]";
 

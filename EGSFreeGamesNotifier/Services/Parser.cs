@@ -34,7 +34,7 @@ namespace EGSFreeGamesNotifier.Services {
 							ID = game.ID
 						};
 
-						newRecord.Url = $"{ParseStrings.EGSUrlPre}{newRecord.Name}";
+						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(game.OfferType, 0)]}{newRecord.Name}";
 
 						if (game.Promotions.PromotionalOffers.Count > 0 && game.Promotions.PromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
 							var offer = game.Promotions.PromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
@@ -80,16 +80,21 @@ namespace EGSFreeGamesNotifier.Services {
 		private string GetProductSlug(Element_ game) {
 			string gameName = string.Empty;
 
-			if(!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
-			if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-				gameName = game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-			if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-				gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-			if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
-				gameName = game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
-			if (gameName == ParseStrings.MisteryGameName) {
-				gameName = game.UrlSlug;
-				_logger.LogDebug(ParseStrings.debugMisteryGameFound, gameName);
+			if (game.OfferType == ParseStrings.OfferTypeAddOn) { // return offerMappings value if free game is add on
+				if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+			} else {
+				if (!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
+				if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+					gameName = game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+				if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+				if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
+					gameName = game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
+				if (gameName == ParseStrings.MisteryGameName) {
+					gameName = game.UrlSlug;
+					_logger.LogDebug(ParseStrings.debugMisteryGameFound, gameName);
+				}
 			}
 
 			return gameName;
