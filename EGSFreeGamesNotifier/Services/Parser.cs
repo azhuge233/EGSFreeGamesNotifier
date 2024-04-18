@@ -55,12 +55,12 @@ namespace EGSFreeGamesNotifier.Services {
 						result.Records.Add(newRecord);
 
 						if (!oldRecords.Any(record => record.ID == newRecord.ID)) {
-							_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title);
+							_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title, game.OfferType);
 							result.NotifyRecords.Add(newRecord);
 						} else if (oldRecords.First(record => record.ID == newRecord.ID).IsUpcomingPromotion != newRecord.IsUpcomingPromotion) {
-							_logger.LogInformation(ParseStrings.infoUpcomingGameIsLive, newRecord.Title);
+							_logger.LogInformation(ParseStrings.infoUpcomingGameIsLive, newRecord.Title, game.OfferType);
 							result.NotifyRecords.Add(newRecord);
-						} else _logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title);
+						} else _logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title, game.OfferType);
 					}
 				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
 
