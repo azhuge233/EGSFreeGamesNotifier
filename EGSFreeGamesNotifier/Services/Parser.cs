@@ -81,11 +81,11 @@ namespace EGSFreeGamesNotifier.Services {
 			string gameName = string.Empty;
 
 			if(!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
-			if (game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+			if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
 				gameName = game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-			if (game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+			if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
 				gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-			if (game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
+			if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
 				gameName = game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
 			if (gameName == ParseStrings.MisteryGameName) {
 				gameName = game.UrlSlug;
