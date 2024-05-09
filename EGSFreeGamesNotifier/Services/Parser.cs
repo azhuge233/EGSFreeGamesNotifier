@@ -81,8 +81,8 @@ namespace EGSFreeGamesNotifier.Services {
 			string gameName = string.Empty;
 
 			if (game.OfferType == ParseStrings.OfferTypeAddOn) { // return offerMappings value if free game is add on
-				if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
+				if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType || map.PageType == ParseStrings.UrlPageSlugPageType))
+					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType || map.PageType == ParseStrings.UrlPageSlugPageType).PageSlug;
 			} else {
 				if (!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
 				if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))

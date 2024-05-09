@@ -1,6 +1,7 @@
 ﻿namespace EGSFreeGamesNotifier.Strings {
 	internal class ParseStrings {
 		internal static readonly string UrlProductSlugPageType = "productHome";
+		internal static readonly string UrlPageSlugPageType = "offer";
 		internal static readonly string CustomAttrProductSlugKey = "com.epicgames.app.productSlug";
 
 		#region Free game offerTypes name
