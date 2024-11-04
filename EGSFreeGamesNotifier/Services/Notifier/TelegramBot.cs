@@ -23,7 +23,7 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 			try {
 				foreach (var record in records) {
 					_logger.LogDebug($"{debugSendMessage} : {record.Name}");
-					await BotClient.SendTextMessageAsync(
+					await BotClient.SendMessage(
 						chatId: config.TelegramChatID,
 						text: $"{record.ToTelegramMessage()}{NotifyFormatStrings.projectLinkHTML.Replace("<br>", "\n")}",
 						parseMode: ParseMode.Html
