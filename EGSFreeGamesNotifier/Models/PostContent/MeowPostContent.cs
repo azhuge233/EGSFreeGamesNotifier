@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SteamDBFreeGames.Models.PostContent {
+namespace EGSFreeGamesNotifier.Models.PostContent {
 	public class MeowPostContent {
 		[JsonPropertyName("title")]
 		public string Title { get; set; }

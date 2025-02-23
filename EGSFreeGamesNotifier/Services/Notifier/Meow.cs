@@ -2,7 +2,7 @@
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
 using Microsoft.Extensions.Logging;
-using SteamDBFreeGames.Models.PostContent;
+using EGSFreeGamesNotifier.Models.PostContent;
 using System.Text.Json;
 using System.Text;
 
