@@ -45,5 +45,9 @@ namespace EGSFreeGamesNotifier.Models.Record {
 		public string ToDiscordMessage() {
 			return new StringBuilder().AppendFormat(NotifyFormatStrings.discordPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
 		}
+
+		public string ToMeowMessage() {
+			return new StringBuilder().AppendFormat(NotifyFormatStrings.meowPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+		}
 	}
 }

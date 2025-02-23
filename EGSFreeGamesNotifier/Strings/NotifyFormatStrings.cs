@@ -114,6 +114,20 @@
 			"Start Time: {2}\n" +
 			"End Time: {3}\n"
 		};
+
+		internal static readonly List<string> meowPushFormat = new() {
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"EGS Link: {1}\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"EGS Link: {1}\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n"
+		};
 		#endregion
 
 		#region url, title format string
@@ -141,6 +155,9 @@
 		internal static readonly string dingTalkUrlFormat = "https://oapi.dingtalk.com/robot/send?access_token={0}";
 
 		internal static readonly string pushDeerUrlFormat = "https://api2.pushdeer.com/message/push?pushkey={0}&&text={1}";
+
+		internal static readonly string meowUrlFormat = "{0}/{1}";
+		internal static readonly string meowUrlTitle = "EGSFreeGamesNotifier";
 		#endregion
 
 		internal static readonly string projectLink = "\n\nFrom https://github.com/azhuge233/EGSFreeGamesNotifier";

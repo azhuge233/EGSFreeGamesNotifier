@@ -26,6 +26,7 @@ namespace EGSFreeGamesNotifier.Modules {
 			   .AddTransient<DingTalk>()
 			   .AddTransient<PushDeer>()
 			   .AddTransient<Discord>()
+			   .AddTransient<Meow>()
 			   .AddLogging(loggingBuilder => {
 				   // configure Logging with NLog
 				   loggingBuilder.ClearProviders();
@@ -46,6 +47,7 @@ namespace EGSFreeGamesNotifier.Modules {
 			   .AddTransient<DingTalk>()
 			   .AddTransient<PushDeer>()
 			   .AddTransient<Discord>()
+			   .AddTransient<Meow>()
 			   .AddLogging(loggingBuilder => {
 				   // configure Logging with NLog
 				   loggingBuilder.ClearProviders();

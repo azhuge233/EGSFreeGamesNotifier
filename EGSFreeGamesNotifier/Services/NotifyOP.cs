@@ -104,6 +104,12 @@ namespace EGSFreeGamesNotifier.Services {
 					notifyTasks.Add(services.GetRequiredService<Email>().SendMessage(config, pushListFinal));
 				} else _logger.LogInformation(debugDisabledFormat, "Email");
 
+				// Meow notifications
+				if (config.EnableMeow) {
+					_logger.LogInformation(debugEnabledFormat, "Meow");
+					notifyTasks.Add(services.GetRequiredService<Meow>().SendMessage(config, pushListFinal));
+				} else _logger.LogInformation(debugDisabledFormat, "Meow");
+
 				await Task.WhenAll(notifyTasks);
 
 				_logger.LogDebug($"Done: {debugNotify}");
