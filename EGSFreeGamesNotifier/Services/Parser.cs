@@ -65,7 +65,7 @@ namespace EGSFreeGamesNotifier.Services {
 				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
 
 				if(result.NotifyRecords.Count > 0)
-					result.NotifyRecords = result.NotifyRecords.OrderBy(record => record.IsUpcomingPromotion).ToList();
+					result.NotifyRecords = [.. result.NotifyRecords.OrderBy(record => record.IsUpcomingPromotion)];
 
 				_logger.LogDebug($"Done: {ParseStrings.debugParse}");
 				return result;
