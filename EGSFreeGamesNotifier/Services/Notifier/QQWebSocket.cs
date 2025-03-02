@@ -4,28 +4,27 @@ using EGSFreeGamesNotifier.Models.WebSocketContent;
 using EGSFreeGamesNotifier.Strings;
 using Microsoft.Extensions.Logging;
 using System.Net.WebSockets;
-using System.Text;
 using System.Text.Json;
 using Websocket.Client;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class QQRed : INotifiable {
+	internal class QQWebSocket : INotifiable {
 
-		private readonly ILogger<QQRed> _logger;
+		private readonly ILogger<QQWebSocket> _logger;
 
 		#region debug strings
-		private readonly string debugSendMessage = "Send notifications to QQ Red (Chronocat)";
+		private readonly string debugSendMessage = "Send notifications to QQ WebSocket";
 		private readonly string debugWSReconnection = "Reconnection happened, type: {0}";
 		private readonly string debugWSMessageRecieved = "Message received: {0}";
 		private readonly string debugWSDisconnected = "Disconnected: {0}";
 		#endregion
 
-		public QQRed(ILogger<QQRed> logger) {
+		public QQWebSocket(ILogger<QQWebSocket> logger) {
 			_logger = logger;
 		}
 
 		private WebsocketClient GetWSClient(NotifyConfig config) {
-			var url = new Uri(new StringBuilder().AppendFormat(NotifyFormatStrings.qqRedUrlFormat, config.RedAddress, config.RedPort).ToString());
+			var url = new Uri(string.Format(NotifyFormatStrings.qqWebSocketUrlFormat, config.QQWebSocketAddress, config.QQWebSocketPort, config.QQWebSocketToken));
 
 			#region new websocket client
 			var client = new WebsocketClient(url);
@@ -37,32 +36,12 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 			return client;
 		}
 
-		private static WSPacket GetConnectPacket(NotifyConfig config) {
-			return new WSPacket() {
-				Type = NotifyFormatStrings.qqRedWSConnectPacketType,
-				Payload = new ConnectPayload() {
-					Token = config.RedToken
-				}
-			};
-		}
-
 		private static List<WSPacket> GetSendPacket(NotifyConfig config, List<NotifyRecord> records) {
 			return records.Select(record => new WSPacket() {
-				Type = NotifyFormatStrings.qqRedWSSendPacketType,
-				Payload = new MessagePayload() {
-					Peer = new Peer() {
-						ChatType = 1,
-						PeerUin = config.ToQQID
-					},
-					Elements = new List<object>() {
-						new TextElementRoot() {
-							TextElement = new TextElement() {
-								Content = new StringBuilder().Append(record.ToQQMessage())
-															.Append(NotifyFormatStrings.projectLink)
-															.ToString()
-							}
-						}
-					}
+				Action = NotifyFormatStrings.qqWebSocketSendAction,
+				Params = new Param { 
+					UserID = config.ToQQID,
+					Message = $"{record.ToQQMessage()}{NotifyFormatStrings.projectLink}"
 				}
 			}).ToList();
 		}
@@ -76,8 +55,6 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 				using var client = GetWSClient(config);
 
 				await client.Start();
-
-				await client.SendInstant(JsonSerializer.Serialize(GetConnectPacket(config)));
 
 				foreach (var packet in packets) {
 					await client.SendInstant(JsonSerializer.Serialize(packet));

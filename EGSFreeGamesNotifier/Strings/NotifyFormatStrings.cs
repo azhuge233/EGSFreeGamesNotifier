@@ -142,10 +142,9 @@
 		internal static readonly string emailTitleFormat = "{0} new free game(s) - EGSFreeGamesNotifier";
 		internal static readonly string emailBodyFormat = "<br>{0}";
 
-		internal static readonly string qqUrlFormat = "http://{0}:{1}/send_private_msg?user_id={2}&message=";
-		internal static readonly string qqRedUrlFormat = "ws://{0}:{1}";
-		internal static readonly string qqRedWSConnectPacketType = "meta::connect";
-		internal static readonly string qqRedWSSendPacketType = "message::send";
+		internal static readonly string qqHttpUrlFormat = "http://{0}:{1}/send_private_msg?access_token={2}";
+		internal static readonly string qqWebSocketUrlFormat = "ws://{0}:{1}/?access_token={2}";
+		internal static readonly string qqWebSocketSendAction = "send_private_msg";
 
 		internal static readonly string pushPlusTitleFormat = "{0} new free game(s) - EGSFreeGamesNotifier";
 		internal static readonly string pushPlusBodyFormat = "<br>{0}";
