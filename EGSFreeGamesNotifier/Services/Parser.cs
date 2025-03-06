@@ -4,6 +4,7 @@ using EGSFreeGamesNotifier.Models.EGSJsonData;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
 using System.Text.Json;
+using System.ComponentModel;
 
 namespace EGSFreeGamesNotifier.Services {
 	internal class Parser: IDisposable {
@@ -87,14 +88,20 @@ namespace EGSFreeGamesNotifier.Services {
 				if (gameName == ParseStrings.MisteryGameName) {
 					gameName = game.UrlSlug;
 					_logger.LogDebug(ParseStrings.debugMisteryGameFound, gameName);
-				} else if (!string.IsNullOrEmpty(game.UrlSlug)) gameName = game.UrlSlug;
-				else if (!string.IsNullOrEmpty(game.ProductSlug)) gameName = game.ProductSlug;
-				else if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-					gameName = game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-				else if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
-					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug;
-				else if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
-					gameName = game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value;
+				} else {
+					List<string> gameNameList = [];
+
+					if (!string.IsNullOrEmpty(game.UrlSlug)) gameNameList.Add(game.UrlSlug);
+					if (!string.IsNullOrEmpty(game.ProductSlug)) gameNameList.Add(game.ProductSlug);
+					if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+						gameNameList.Add(game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug);
+					if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+						gameNameList.Add(game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug);
+					if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
+						gameNameList.Add(game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value);
+
+					gameName = gameNameList.GroupBy(name => name).MaxBy(gp => gp.Count()).Key;
+				}
 			}
 
 			return gameName;
