@@ -28,7 +28,7 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 			};
 
 			for (int i = 0; i < records.Count; i++) {
-				if (content.Embeds.Count == 10) {
+				if (content.Embeds.Count == 2) {
 					contents.Add(content);
 					content = new DiscordPostContent() {
 						Content = records.Count - i - 1 > 1 ? "New Free Games - Epic Game Store" : "New Free Game - Epic Game Store"
