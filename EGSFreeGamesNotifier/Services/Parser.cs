@@ -78,7 +78,7 @@ namespace EGSFreeGamesNotifier.Services {
 			}
 		}
 
-		private string GetProductSlug(Element_ game) {
+		private static string GetProductSlug(Element_ game) {
 			string gameName = string.Empty;
 
 			if (game.OfferType == ParseStrings.OfferTypeAddOn) { // return offerMappings value if free game is add on
