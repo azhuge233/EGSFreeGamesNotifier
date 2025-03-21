@@ -85,10 +85,6 @@ namespace EGSFreeGamesNotifier.Services {
 				if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType || map.PageType == ParseStrings.UrlPageSlugPageType))
 					gameName = game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType || map.PageType == ParseStrings.UrlPageSlugPageType).PageSlug;
 			} else {
-				if (gameName == ParseStrings.MisteryGameName) {
-					gameName = game.UrlSlug;
-					_logger.LogDebug(ParseStrings.debugMisteryGameFound, gameName);
-				} else {
 					List<string> gameNameList = [];
 
 					if (!string.IsNullOrEmpty(game.UrlSlug)) gameNameList.Add(game.UrlSlug);
