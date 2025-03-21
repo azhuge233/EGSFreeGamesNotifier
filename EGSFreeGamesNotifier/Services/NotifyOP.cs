@@ -27,7 +27,7 @@ namespace EGSFreeGamesNotifier.Services {
 			var resultList = new List<NotifyRecord>();
 
 			try {
-				resultList = pushList.Select(record => new NotifyRecord(record)).ToList();
+				resultList = [.. pushList.Select(record => new NotifyRecord(record))];
 			} catch (Exception) {
 				_logger.LogError($"Error: {debugGenerateNotifyRecordList}");
 				throw;
