@@ -7,7 +7,10 @@ namespace EGSFreeGamesNotifier.Models.Record {
 		public NotifyRecord() { }
 
 		public NotifyRecord(FreeGameRecord record): base(record) {
-			if (Title == NotifyStrings.MysteryGameName && Title == Description) Url = NotifyStrings.EGSUrlPre;
+			if (Title.StartsWith(NotifyStrings.MysteryGameName) || Title == Description) {
+				Url = NotifyStrings.EGStoreLink;
+				PurchaseUrl = NotifyStrings.NoPurchaseLink;
+			}
 		}
 
 		private static string RemoveSpecialCharacters(string str) {
@@ -15,39 +18,39 @@ namespace EGSFreeGamesNotifier.Models.Record {
 		}
 
 		public string ToTelegramMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.telegramPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Description, Url, $"{StartTime} CST", $"{EndTime} CST", RemoveSpecialCharacters(Title)).ToString();
+			return string.Format(NotifyFormatStrings.telegramPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Description, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST", RemoveSpecialCharacters(Title));
 		}
 
 		public string ToBarkMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.barkPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.barkPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToEmailMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.emailPushHtmlFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.emailPushHtmlFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToQQMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.qqPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.qqPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToPushPlusMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushPlusPushHtmlFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.pushPlusPushHtmlFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToDingTalkMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.dingTalkPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.dingTalkPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToPushDeerMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushDeerPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.pushDeerPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToDiscordMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.discordPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.discordPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 
 		public string ToMeowMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.meowPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, $"{StartTime} CST", $"{EndTime} CST").ToString();
+			return string.Format(NotifyFormatStrings.meowPushFormat[IsUpcomingPromotion ? 1 : 0], Title, Url, PurchaseUrl, $"{StartTime} CST", $"{EndTime} CST");
 		}
 	}
 }

@@ -21,6 +21,8 @@
 			{ OfferTypeAddOn, 1 } 
 		};
 
+		internal static readonly string PurchaseBaseUrl = @"https://store.epicgames.com/purchase?offers=1-{0}-{1}";
+
 		#region debug strings
 		internal static readonly string debugParse = "Parse";
 		internal static readonly string debugParseWithUrl = "Parsing: {0}";

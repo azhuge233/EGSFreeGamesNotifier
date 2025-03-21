@@ -28,6 +28,9 @@ namespace EGSFreeGamesNotifier.Models.EGSJsonData {
 		[JsonPropertyName("id")]
 		public string ID { get; set; }
 
+		[JsonPropertyName("namespace")]
+		public string Namespace { get; set; }
+
 		[JsonPropertyName("description")]
 		public string Description { get; set; }
 

@@ -4,6 +4,7 @@
 
 		internal static readonly string MysteryGameName = "Mystery Game";
 
-		internal static readonly string EGSUrlPre = "https://store.epicgames.com";
+		internal static readonly string EGStoreLink = "https://store.epicgames.com/";
+		internal static readonly string NoPurchaseLink = "No Purchase Link";
 	}
 }

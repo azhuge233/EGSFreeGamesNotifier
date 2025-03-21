@@ -1,133 +1,151 @@
 ﻿namespace EGSFreeGamesNotifier.Strings {
 	internal class NotifyFormatStrings {
 		#region record strings
-		internal static readonly List<string> telegramPushFormat = new() {
+		internal static readonly List<string> telegramPushFormat = [
 			"<b>New EGS Free Game</b>\n\n" +
 			"<b>{0}</b>\n\n" + // Title
 			"<i>{1}</i>\n\n" + // Description
-			"EGS Link: <a href=\"{2}\" >{0}</a>\n" + // Url
-			"Start Time: {3}\n" + // StartTime
-			"End Time: {4}\n\n" + // EndTime
-			"#EGS #{5}",
+			"Store Link: <a href=\"{2}\" >{0}</a>\n" + // Url
+			"Claim Link: <a href=\"{3}\" >Purchase</a>\n\n" + // Purchase Url
+			"Start Time: {4}\n" + // StartTime
+			"End Time: {5}\n\n" + // EndTime
+			"#EGS #{6}",
 
 			"<b>Upcoming EGS Free Game</b>\n\n" +
 			"<b>{0}</b>\n\n" + // Title
 			"<i>{1}</i>\n\n" + // Description
-			"EGS Link: <a href=\"{2}\" >{0}</a>\n" + // Url
-			"Start Time: {3}\n" + // StartTime
-			"End Time: {4}\n\n" + // EndTime
-			"#EGS #Upcoming #{5}",
-		};
+			"Store Link: <a href=\"{2}\" >{0}</a>\n" + // Url
+			"Claim Link: <a href=\"{3}\" >Purchase</a>\n\n" + // Purchase Url
+			"Start Time: {4}\n" + // StartTime
+			"End Time: {5}\n\n" + // EndTime
+			"#EGS #Upcoming #{6}"
+		];
 
-		internal static readonly List<string> barkPushFormat = new() {
+		internal static readonly List<string> barkPushFormat = [
 			"New EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n",
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n"
-		};
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n"
+		];
 
-		internal static readonly List<string> emailPushHtmlFormat = new() {
+		internal static readonly List<string> emailPushHtmlFormat = [
 			"<p><b>{0}</b><br>" +
-			"EGS Link: <a href=\"{1}\" > {0}</a><br><br>" +
-			"Start Time: {2}<br>" +
-			"End Time: {3}<br>",
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
+			"Start Time: {3}<br>" +
+			"End Time: {4}<br>",
 
 			"<b><i>Upcoming</i></b>" +
 			"<p><b>{0}</b><br>" +
-			"EGS Link: <a href=\"{1}\" > {0}</a><br><br>" +
-			"Start Time: {2}<br>" +
-			"End Time: {3}<br>"
-		};
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
+			"Start Time: {3}<br>" +
+			"End Time: {4}<br>"
+		];
 
-		internal static readonly List<string> qqPushFormat = new() {
+		internal static readonly List<string> qqPushFormat = [
 			"New EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n",
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n"
-		};
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n"
+		];
 
-		internal static readonly List<string> pushPlusPushHtmlFormat = new() {
+		internal static readonly List<string> pushPlusPushHtmlFormat = [
 			"<p><b>{0}</b><br>" +
-			"EGS Link: <a href=\"{1}\" > {0}</a><br><br>" +
-			"Start Time: {2}<br>" +
-			"End Time: {3}<br>",
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
+			"Start Time: {3}<br>" +
+			"End Time: {4}<br>",
 
 			"<b><i>Upcoming</i></b>" +
 			"<p><b>{0}</b><br>" +
-			"EGS Link: <a href=\"{1}\" > {0}</a><br><br>" +
-			"Start Time: {2}<br>" +
-			"End Time: {3}<br>"
-		};
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
+			"Start Time: {3}<br>" +
+			"End Time: {4}<br>"
+		];
 
-		internal static readonly List<string> dingTalkPushFormat = new() {
+		internal static readonly List<string> dingTalkPushFormat = [
 			"New EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n",
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n"
-		};
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n"
+		];
 
-		internal static readonly List<string> pushDeerPushFormat = new() {
+		internal static readonly List<string> pushDeerPushFormat = [
 			"New EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n\n" +
-			"Start Time: {2}\n\n" +
-			"End Time: {3}\n\n",
+			"Store Link: {1}\n\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n\n" +
+			"End Time: {4}\n\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n\n" +
-			"Start Time: {2}\n\n" +
-			"End Time: {3}\n\n"
-		};
+			"Store Link: {1}\n\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n\n" +
+			"End Time: {4}\n\n"
+		];
 
-		internal static readonly List<string> discordPushFormat = new() {
+		internal static readonly List<string> discordPushFormat = [
+			//"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n",
+
+			//"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n"
+		];
+
+		internal static readonly List<string> meowPushFormat = [
 			"New EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n",
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n"
-		};
-
-		internal static readonly List<string> meowPushFormat = new() {
-			"New EGS Free Game\n\n" +
-			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n",
-
-			"Upcoming EGS Free Game\n\n" +
-			"{0}\n\n" +
-			"EGS Link: {1}\n" +
-			"Start Time: {2}\n" +
-			"End Time: {3}\n"
-		};
+			"Store Link: {1}\n" +
+			"Claim Link: {2}\n\n" +
+			"Start Time: {3}\n" +
+			"End Time: {4}\n"
+		];
 		#endregion
 
 		#region url, title format string
