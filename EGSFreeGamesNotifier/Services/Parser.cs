@@ -27,6 +27,7 @@ namespace EGSFreeGamesNotifier.Services {
 							continue;
 						}
 
+						#region get new record basic info
 						var newRecord = new FreeGameRecord() { 
 							Title = game.Title,
 							Name = GetProductSlug(game),
@@ -35,17 +36,38 @@ namespace EGSFreeGamesNotifier.Services {
 							Namespace = game.Namespace
 						};
 
-						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(game.OfferType, 0)]}{newRecord.Name}";
+						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(game.OfferType, 1)]}{newRecord.Name}";
 						newRecord.PurchaseUrl = string.Format(ParseStrings.PurchaseBaseUrl, newRecord.Namespace, newRecord.ID);
+						#endregion
 
+						#region mystery game 
+						if (newRecord.Title.StartsWith(ParseStrings.MysteryGameName) || newRecord.Title == newRecord.Description) {
+							newRecord.IsMysteryGame = true;
+							newRecord.Url = ParseStrings.EGSUrlPres.FirstOrDefault();
+							newRecord.PurchaseUrl = string.Empty;
+							_logger.LogDebug(ParseStrings.debugMysteryGameFound, newRecord.Title);
+						}
+						#endregion
+
+						#region dev account
+						if (game.Seller.ID == ParseStrings.SellerDevAccountID || string.Equals(game.Seller.Name, ParseStrings.SellerDevAccountName, StringComparison.OrdinalIgnoreCase)) {
+							newRecord.IsDevAccount = true;
+							newRecord.PurchaseUrl = string.Empty;
+							_logger.LogDebug(ParseStrings.debugDevAccountFound, game.Title);
+						}
+						#endregion
+
+						#region deal with promotion time and upcoming
 						if (game.Promotions.PromotionalOffers.Count > 0 && game.Promotions.PromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
 							var offer = game.Promotions.PromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
+
 							newRecord.StartTime = offer.StartDate.AddHours(8);
 							// handles end time null
 							newRecord.EndTime = !offer.EndDate.HasValue ? DateTime.MaxValue : offer.EndDate.Value.AddHours(8);
 						} else if (game.Promotions.UpcomingPromotionalOffers.Count > 0 && game.Promotions.UpcomingPromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
 							newRecord.IsUpcomingPromotion = true;
 							var offer = game.Promotions.UpcomingPromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
+
 							newRecord.StartTime = offer.StartDate.AddHours(8);
 							// handles end time null
 							newRecord.EndTime = !offer.EndDate.HasValue ? DateTime.MaxValue : offer.EndDate.Value.AddHours(8);
@@ -53,16 +75,19 @@ namespace EGSFreeGamesNotifier.Services {
 							_logger.LogDebug(ParseStrings.debugGameNoPromotion, game.Title);
 							continue;
 						}
+						#endregion
 
 						result.Records.Add(newRecord);
 
+						#region decide if notify
 						if (!oldRecords.Any(record => record.ID == newRecord.ID)) {
 							_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title, game.OfferType);
-							result.NotifyRecords.Add(newRecord);
+							result.NotifyRecords.Add(new NotifyRecord(newRecord));
 						} else if (oldRecords.First(record => record.ID == newRecord.ID).IsUpcomingPromotion != newRecord.IsUpcomingPromotion) {
 							_logger.LogInformation(ParseStrings.infoUpcomingGameIsLive, newRecord.Title, game.OfferType);
-							result.NotifyRecords.Add(newRecord);
+							result.NotifyRecords.Add(new NotifyRecord(newRecord));
 						} else _logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title, game.OfferType);
+						#endregion
 					}
 				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
 

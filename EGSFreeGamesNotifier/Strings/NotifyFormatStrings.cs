@@ -2,6 +2,7 @@
 	internal class NotifyFormatStrings {
 		#region record strings
 		internal static readonly List<string> telegramPushFormat = [
+			// All
 			"<b>New EGS Free Game</b>\n\n" +
 			"<b>{0}</b>\n\n" + // Title
 			"<i>{1}</i>\n\n" + // Description
@@ -11,6 +12,24 @@
 			"End Time: {5}\n\n" + // EndTime
 			"#EGS #{6}",
 
+			// Dev Account
+			"<b>New EGS Free Game</b>\n\n" +
+			"<b>{0}</b>\n\n" + // Title
+			"<i>{1}</i>\n\n" + // Description
+			"Store Link: <a href=\"{2}\" >{0}</a>\n\n" + // Url
+			"Start Time: {3}\n" + // StartTime
+			"End Time: {4}\n\n" + // EndTime
+			"#EGS #{5}",
+
+			// Mystery Game
+			"<b>New EGS Free Game</b>\n\n" +
+			"<b>{0}</b>\n\n" + // Title
+			"<i>{1}</i>\n\n" + // Description
+			"Start Time: {2}\n" + // StartTime
+			"End Time: {3}\n\n" + // EndTime
+			"#EGS #{4}",
+
+			// All
 			"<b>Upcoming EGS Free Game</b>\n\n" +
 			"<b>{0}</b>\n\n" + // Title
 			"<i>{1}</i>\n\n" + // Description
@@ -18,7 +37,24 @@
 			"Claim Link: <a href=\"{3}\" >Purchase</a>\n\n" + // Purchase Url
 			"Start Time: {4}\n" + // StartTime
 			"End Time: {5}\n\n" + // EndTime
-			"#EGS #Upcoming #{6}"
+			"#EGS #Upcoming #{6}",
+
+			// Dev Account
+			"<b>Upcoming EGS Free Game</b>\n\n" +
+			"<b>{0}</b>\n\n" + // Title
+			"<i>{1}</i>\n\n" + // Description
+			"Store Link: <a href=\"{2}\" >{0}</a>\n\n" + // Url
+			"Start Time: {3}\n" + // StartTime
+			"End Time: {4}\n\n" + // EndTime
+			"#EGS #Upcoming #{5}",
+
+			// Mystery Game
+			"<b>Upcoming EGS Free Game</b>\n\n" +
+			"<b>{0}</b>\n\n" + // Title
+			"<i>{1}</i>\n\n" + // Description
+			"Start Time: {2}\n" + // StartTime
+			"End Time: {3}\n\n" + // EndTime
+			"#EGS #Upcoming #{4}"
 		];
 
 		internal static readonly List<string> barkPushFormat = [
@@ -29,12 +65,34 @@
 			"Start Time: {3}\n" +
 			"End Time: {4}\n",
 
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
 			"Store Link: {1}\n" +
 			"Claim Link: {2}\n\n" +
 			"Start Time: {3}\n" +
-			"End Time: {4}\n"
+			"End Time: {4}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n"
 		];
 
 		internal static readonly List<string> emailPushHtmlFormat = [
@@ -44,12 +102,32 @@
 			"Start Time: {3}<br>" +
 			"End Time: {4}<br>",
 
+			"<p><b>{0}</b><br>" +
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Start Time: {2}<br>" +
+			"End Time: {3}<br>",
+
+			"<p><b>{0}</b><br>" +
+			"Start Time: {1}<br>" +
+			"End Time: {2}<br>",
+
 			"<b><i>Upcoming</i></b>" +
 			"<p><b>{0}</b><br>" +
 			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
 			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
 			"Start Time: {3}<br>" +
-			"End Time: {4}<br>"
+			"End Time: {4}<br>",
+
+			"<b><i>Upcoming</i></b>" +
+			"<p><b>{0}</b><br>" +
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Start Time: {2}<br>" +
+			"End Time: {3}<br>",
+
+			"<b><i>Upcoming</i></b>" +
+			"<p><b>{0}</b><br>" +
+			"Start Time: {1}<br>" +
+			"End Time: {2}<br>"
 		];
 
 		internal static readonly List<string> qqPushFormat = [
@@ -60,12 +138,34 @@
 			"Start Time: {3}\n" +
 			"End Time: {4}\n",
 
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
 			"Store Link: {1}\n" +
 			"Claim Link: {2}\n\n" +
 			"Start Time: {3}\n" +
-			"End Time: {4}\n"
+			"End Time: {4}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n"
 		];
 
 		internal static readonly List<string> pushPlusPushHtmlFormat = [
@@ -75,12 +175,32 @@
 			"Start Time: {3}<br>" +
 			"End Time: {4}<br>",
 
+			"<p><b>{0}</b><br>" +
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Start Time: {2}<br>" +
+			"End Time: {3}<br>",
+
+			"<p><b>{0}</b><br>" +
+			"Start Time: {1}<br>" +
+			"End Time: {2}<br>",
+
 			"<b><i>Upcoming</i></b>" +
 			"<p><b>{0}</b><br>" +
 			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
 			"Claim Link: <a href=\"{2}\" >Purchase</a><br>" +
 			"Start Time: {3}<br>" +
-			"End Time: {4}<br>"
+			"End Time: {4}<br>",
+
+			"<b><i>Upcoming</i></b>" +
+			"<p><b>{0}</b><br>" +
+			"Store Link: <a href=\"{1}\" >{0}</a><br>" +
+			"Start Time: {2}<br>" +
+			"End Time: {3}<br>",
+
+			"<b><i>Upcoming</i></b>" +
+			"<p><b>{0}</b><br>" +
+			"Start Time: {1}<br>" +
+			"End Time: {2}<br>"
 		];
 
 		internal static readonly List<string> dingTalkPushFormat = [
@@ -91,12 +211,34 @@
 			"Start Time: {3}\n" +
 			"End Time: {4}\n",
 
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
 			"Store Link: {1}\n" +
 			"Claim Link: {2}\n\n" +
 			"Start Time: {3}\n" +
-			"End Time: {4}\n"
+			"End Time: {4}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n"
 		];
 
 		internal static readonly List<string> pushDeerPushFormat = [
@@ -104,31 +246,67 @@
 			"{0}\n\n" +
 			"Store Link: {1}\n\n" +
 			"Claim Link: {2}\n\n" +
-			"Start Time: {3}\n\n" +
+			"Start Time: {3}\n" +
 			"End Time: {4}\n\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n\n",
 
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
 			"Store Link: {1}\n\n" +
 			"Claim Link: {2}\n\n" +
-			"Start Time: {3}\n\n" +
-			"End Time: {4}\n\n"
+			"Start Time: {3}\n" +
+			"End Time: {4}\n\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n\n"
 		];
 
 		internal static readonly List<string> discordPushFormat = [
-			//"New EGS Free Game\n\n" +
-			"{0}\n\n" +
-			"Store Link: {1}\n" +
-			"Claim Link: {2}\n\n" +
-			"Start Time: {3}\n" +
-			"End Time: {4}\n",
+			"\n\n" +
+			"Store Link: {0}\n" +
+			"Claim Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
 
-			//"Upcoming EGS Free Game\n\n" +
-			"{0}\n\n" +
-			"Store Link: {1}\n" +
-			"Claim Link: {2}\n\n" +
-			"Start Time: {3}\n" +
-			"End Time: {4}\n"
+			"Store Link: {0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
+			"Start Time: {0}\n" +
+			"End Time: {1}\n",
+
+			"Upcoming\n\n" +
+			"Store Link: {0}\n" +
+			"Claim Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming\n\n" +
+			"Store Link: {0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
+			"Upcoming\n\n" +
+			"Start Time: {0}\n" +
+			"End Time: {1}\n"
 		];
 
 		internal static readonly List<string> meowPushFormat = [
@@ -139,12 +317,34 @@
 			"Start Time: {3}\n" +
 			"End Time: {4}\n",
 
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"New EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n",
+
 			"Upcoming EGS Free Game\n\n" +
 			"{0}\n\n" +
 			"Store Link: {1}\n" +
 			"Claim Link: {2}\n\n" +
 			"Start Time: {3}\n" +
-			"End Time: {4}\n"
+			"End Time: {4}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Store Link: {1}\n\n" +
+			"Start Time: {2}\n" +
+			"End Time: {3}\n",
+
+			"Upcoming EGS Free Game\n\n" +
+			"{0}\n\n" +
+			"Start Time: {1}\n" +
+			"End Time: {2}\n"
 		];
 		#endregion
 
