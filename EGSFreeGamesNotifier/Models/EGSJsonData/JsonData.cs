@@ -37,6 +37,9 @@ namespace EGSFreeGamesNotifier.Models.EGSJsonData {
 		[JsonPropertyName("offerType")]
 		public string OfferType { get; set; }
 
+		[JsonPropertyName("seller")]
+		public Seller_ Seller { get; set; }
+
 		[JsonPropertyName("productSlug")]
 		public string ProductSlug { get; set; }
 
@@ -54,6 +57,14 @@ namespace EGSFreeGamesNotifier.Models.EGSJsonData {
 
 		[JsonPropertyName("promotions")]
 		public Promotions_ Promotions { get; set; }
+	}
+
+	public class Seller_ {
+		[JsonPropertyName("id")]
+		public string ID { get; set; }
+
+		[JsonPropertyName("name")]
+		public string Name { get; set; }
 	}
 
 	public class CustomAttribute {
