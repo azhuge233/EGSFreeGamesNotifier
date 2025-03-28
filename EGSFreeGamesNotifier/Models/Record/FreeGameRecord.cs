@@ -10,19 +10,9 @@
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public bool IsUpcomingPromotion { get; set; } = false;
+		public bool IsMysteryGame { get; set; } = false;
+		public bool IsDevAccount { get; set; } = false;
 
 		public FreeGameRecord() { }
-		public FreeGameRecord(FreeGameRecord record) {
-			Name = record.Name;
-			Title = record.Title;
-			Description = record.Description;
-			Url = record.Url;
-			PurchaseUrl = record.PurchaseUrl;
-			ID = record.ID;
-			Namespace = record.Namespace;
-			IsUpcomingPromotion = record.IsUpcomingPromotion;
-			StartTime = record.StartTime;
-			EndTime = record.EndTime;
-		}
 	}
 }
