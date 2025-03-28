@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using EGSFreeGamesNotifier.Strings;
-using System;
 
 namespace EGSFreeGamesNotifier.Services {
 	internal class Scraper: IDisposable {

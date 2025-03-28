@@ -23,7 +23,7 @@ namespace EGSFreeGamesNotifier {
 
 					// Get page source
 					var source = await servicesProvider.GetRequiredService<Scraper>().GetSource();
-					//var source = System.IO.File.ReadAllText("test.json");
+					// var source = System.IO.File.ReadAllText("test.json");
 
 					// Parse page source
 					var parseResult = servicesProvider.GetRequiredService<Parser>().Parse(source, oldRecord);

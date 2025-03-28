@@ -2,8 +2,8 @@
 
 namespace EGSFreeGamesNotifier.Models {
 	public class ParseResult {
-		public List<FreeGameRecord> Records { get; set; } = new List<FreeGameRecord>();
+		public List<FreeGameRecord> Records { get; set; } = [];
 
-		public List<FreeGameRecord> NotifyRecords { get; set; } = new List<FreeGameRecord>();
+		public List<NotifyRecord> NotifyRecords { get; set; } = [];
 	}
 }

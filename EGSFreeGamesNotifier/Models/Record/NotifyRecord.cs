@@ -4,12 +4,29 @@ using EGSFreeGamesNotifier.Strings;
 
 namespace EGSFreeGamesNotifier.Models.Record {
 	public class NotifyRecord: FreeGameRecord {
+
+		private new string StartTime { get; set; }
+		private new string EndTime { get; set; }
+
 		public NotifyRecord() { }
 
-		public NotifyRecord(FreeGameRecord record): base(record) {
-			if (Title.StartsWith(NotifyStrings.MysteryGameName) || Title == Description) {
-				Url = NotifyStrings.EGStoreLink;
-				PurchaseUrl = NotifyStrings.NoPurchaseLink;
+		public NotifyRecord(FreeGameRecord record) {
+			#region FreeGameRecord
+			Name = record.Name;
+			Title = record.Title;
+			Description = record.Description;
+			Url = record.Url;
+			PurchaseUrl = record.PurchaseUrl;
+			ID = record.ID;
+			Namespace = record.Namespace;
+
+			StartTime = $"{record.StartTime} CST";
+			EndTime = $"{record.EndTime} CST";
+
+			IsUpcomingPromotion = record.IsUpcomingPromotion;
+			IsMysteryGame = record.IsMysteryGame;
+			IsDevAccount = record.IsDevAccount;
+			#endregion
 			}
 		}
 
