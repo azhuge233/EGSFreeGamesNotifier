@@ -38,7 +38,7 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 				content.Embeds.Add(
 					new Embed() {
 						Title = records[i].Title,
-						Url = records[i].Url,
+						// Url = records[i].Url,
 						Description = records[i].ToDiscordMessage(),
 						Footer = new Footer() {
 							Text = NotifyFormatStrings.projectLink
