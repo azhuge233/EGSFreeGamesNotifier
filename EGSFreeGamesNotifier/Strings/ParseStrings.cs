@@ -8,6 +8,7 @@
 		internal static readonly string OfferTypeBaseGame = "BASE_GAME";
 		internal static readonly string OfferTypeBundle = "BUNDLE";
 		internal static readonly string OfferTypeAddOn = "ADD_ON";
+		internal static readonly string OfferTypeEdition = "EDITION";
 		internal static readonly string OfferTypeOthers = "OTHERS";
 		#endregion
 
@@ -26,6 +27,7 @@
 			{ OfferTypeBaseGame, 1 }, 
 			{ OfferTypeBundle, 2 }, 
 			{ OfferTypeAddOn, 1 },
+			{ OfferTypeEdition, 1 },
 			{ OfferTypeOthers, 1}
 		};
 		#endregion
