@@ -15,7 +15,6 @@ namespace EGSFreeGamesNotifier.Services {
 		private readonly string debugEnabledFormat = "Sending notifications to {0}";
 		private readonly string debugDisabledFormat = "{0} notify is disabled, skipping";
 		private readonly string debugNoNewNotifications = "No new notifications! Skipping";
-		private readonly string debugGenerateNotifyRecordList = "Generating notify record";
 		#endregion
 
 		public NotifyOP(ILogger<NotifyOP> logger) {
