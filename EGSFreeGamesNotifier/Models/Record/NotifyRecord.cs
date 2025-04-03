@@ -19,6 +19,7 @@ namespace EGSFreeGamesNotifier.Models.Record {
 			PurchaseUrl = record.PurchaseUrl;
 			ID = record.ID;
 			Namespace = record.Namespace;
+			OfferType = record.OfferType;
 
 			StartTime = $"{record.StartTime} CST";
 			EndTime = $"{record.EndTime} CST";

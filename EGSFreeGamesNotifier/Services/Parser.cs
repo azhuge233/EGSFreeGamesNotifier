@@ -33,7 +33,8 @@ namespace EGSFreeGamesNotifier.Services {
 							Name = GetProductSlug(game),
 							Description = game.Description,
 							ID = game.ID,
-							Namespace = game.Namespace
+							Namespace = game.Namespace,
+							OfferType = game.OfferType
 						};
 
 						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(game.OfferType, 1)]}{newRecord.Name}";

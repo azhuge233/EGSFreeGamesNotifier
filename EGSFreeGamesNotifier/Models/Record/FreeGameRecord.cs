@@ -7,6 +7,7 @@
 		public string PurchaseUrl { get; set; }
 		public string ID { get; set; }
 		public string Namespace { get; set; }
+		public string OfferType { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public bool IsUpcomingPromotion { get; set; } = false;
