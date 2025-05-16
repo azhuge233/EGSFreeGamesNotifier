@@ -42,7 +42,7 @@ namespace EGSFreeGamesNotifier.Services {
 						#endregion
 
 						#region mystery game 
-						if (newRecord.Title.StartsWith(ParseStrings.MysteryGameName) || newRecord.Title == newRecord.Description) {
+						if (newRecord.Title.StartsWith(ParseStrings.MysteryGameName)) {
 							newRecord.IsMysteryGame = true;
 							newRecord.Url = ParseStrings.EGSUrlPres.FirstOrDefault();
 							newRecord.PurchaseUrl = string.Empty;
