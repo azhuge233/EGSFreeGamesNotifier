@@ -1,23 +1,21 @@
-﻿using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
-using Telegram.Bot.Types.Enums;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class TelegramBot: INotifiable {
-		private readonly ILogger<TelegramBot> _logger;
+	internal class TelegramBot(ILogger<TelegramBot> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<TelegramBot> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Telegram";
 		#endregion
 
-		public TelegramBot(ILogger<TelegramBot> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			var BotClient = new TelegramBotClient(token: config.TelegramToken);
 
 			try {

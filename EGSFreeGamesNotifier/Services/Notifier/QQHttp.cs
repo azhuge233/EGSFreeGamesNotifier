@@ -1,24 +1,22 @@
-﻿using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
+using EGSFreeGamesNotifier.Models.PostContent;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Text;
-using EGSFreeGamesNotifier.Models.PostContent;
 using System.Text.Json;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class QQHttp: INotifiable {
-		private readonly ILogger<QQHttp> _logger;
+	internal class QQHttp(ILogger<QQHttp> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<QQHttp> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notifications to QQ Http";
 		#endregion
 
-		public QQHttp(ILogger<QQHttp> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

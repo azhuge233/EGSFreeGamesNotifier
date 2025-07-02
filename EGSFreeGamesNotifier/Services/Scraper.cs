@@ -2,14 +2,10 @@
 using EGSFreeGamesNotifier.Strings;
 
 namespace EGSFreeGamesNotifier.Services {
-	internal class Scraper: IDisposable {
-		private readonly ILogger<Scraper> _logger;
+	internal class Scraper(ILogger<Scraper> logger) : IDisposable {
+		private readonly ILogger<Scraper> _logger = logger;
 
 		internal HttpClient Client { get; set; } = new HttpClient();
-
-		public Scraper(ILogger<Scraper> logger) {
-			_logger = logger;
-		}
 
 		internal async Task<string> GetSource() {
 			try {

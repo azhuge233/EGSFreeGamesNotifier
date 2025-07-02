@@ -1,44 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
 using EGSFreeGamesNotifier.Models.PostContent;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Text;
-using System.Web;
 using System.Text.Json;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class PushPlus: INotifiable {
-		private readonly ILogger<PushPlus> _logger;
+	internal class PushPlus(ILogger<PushPlus> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<PushPlus> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to PushPlus";
 		private readonly string debugCreateMessage = "Create notification message";
 		#endregion
 
-		public PushPlus(ILogger<PushPlus> logger) {
-			_logger = logger;
-		}
-
-		private string CreateMessage(List<NotifyRecord> records) {
-			try {
-				_logger.LogDebug(debugCreateMessage);
-
-				var sb = new StringBuilder();
-
-				records.ForEach(record => sb.AppendFormat(NotifyFormatStrings.pushPlusBodyFormat, record.ToPushPlusMessage()));
-
-				sb.Append(NotifyFormatStrings.projectLinkHTML);
-
-				_logger.LogDebug($"Done: {debugCreateMessage}");
-				return sb.ToString();
-			} catch (Exception) {
-				_logger.LogError($"Error: {debugCreateMessage}");
-				throw;
-			}
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 
@@ -61,6 +40,23 @@ namespace EGSFreeGamesNotifier.Services.Notifier {
 				throw;
 			} finally {
 				Dispose();
+			}
+		}
+		private string CreateMessage(List<NotifyRecord> records) {
+			try {
+				_logger.LogDebug(debugCreateMessage);
+
+				var sb = new StringBuilder();
+
+				records.ForEach(record => sb.AppendFormat(NotifyFormatStrings.pushPlusBodyFormat, record.ToPushPlusMessage()));
+
+				sb.Append(NotifyFormatStrings.projectLinkHTML);
+
+				_logger.LogDebug($"Done: {debugCreateMessage}");
+				return sb.ToString();
+			} catch (Exception) {
+				_logger.LogError($"Error: {debugCreateMessage}");
+				throw;
 			}
 		}
 

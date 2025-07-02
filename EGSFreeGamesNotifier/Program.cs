@@ -17,9 +17,8 @@ namespace EGSFreeGamesNotifier {
 					var jsonOp = servicesProvider.GetRequiredService<JsonOP>();
 					var notifyOP = servicesProvider.GetRequiredService<NotifyOP>();
 
-					var config = jsonOp.LoadConfig();
 					var oldRecord = jsonOp.LoadData();
-					servicesProvider.GetRequiredService<ConfigValidator>().CheckValid(config);
+					servicesProvider.GetRequiredService<ConfigValidator>().CheckValid();
 
 					// Get page source
 					var source = await servicesProvider.GetRequiredService<Scraper>().GetSource();
@@ -29,7 +28,7 @@ namespace EGSFreeGamesNotifier {
 					var parseResult = servicesProvider.GetRequiredService<Parser>().Parse(source, oldRecord);
 
 					// Notify first, then write records
-					await notifyOP.Notify(config, parseResult.NotifyRecords);
+					await notifyOP.Notify(parseResult.NotifyRecords);
 
 					// Write new records
 					jsonOp.WriteData(parseResult.Records);

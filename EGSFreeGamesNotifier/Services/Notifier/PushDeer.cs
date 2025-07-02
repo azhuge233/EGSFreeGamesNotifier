@@ -1,23 +1,21 @@
-﻿using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Text;
 using System.Web;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class PushDeer: INotifiable {
-		private readonly ILogger<PushDeer> _logger;
+	internal class PushDeer(ILogger<PushDeer> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<PushDeer> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to PushDeer";
 		#endregion
 
-		public PushDeer(ILogger<PushDeer> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 				var sb = new StringBuilder();

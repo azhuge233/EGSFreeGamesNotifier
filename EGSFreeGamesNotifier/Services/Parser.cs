@@ -6,12 +6,8 @@ using EGSFreeGamesNotifier.Strings;
 using System.Text.Json;
 
 namespace EGSFreeGamesNotifier.Services {
-	internal class Parser: IDisposable {
-		private readonly ILogger<Parser> _logger;
-
-		public Parser(ILogger<Parser> logger) {
-			_logger = logger;
-		}
+	internal class Parser(ILogger<Parser> logger) : IDisposable {
+		private readonly ILogger<Parser> _logger = logger;
 
 		internal ParseResult Parse(string source, List<FreeGameRecord> oldRecords) {
 			try {

@@ -1,24 +1,22 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
 using EGSFreeGamesNotifier.Models.PostContent;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Text;
+using System.Text.Json;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class DingTalk: INotifiable {
-		private readonly ILogger<DingTalk> _logger;
+	internal class DingTalk(ILogger<DingTalk> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<DingTalk> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notifications to DingTalk";
 		#endregion
 
-		public DingTalk(ILogger<DingTalk> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using EGSFreeGamesNotifier.Models.Record;
-using EGSFreeGamesNotifier.Models.Config;
 
 namespace EGSFreeGamesNotifier.Services {
-	internal class JsonOP : IDisposable {
-		private readonly ILogger<JsonOP> _logger;
+	internal class JsonOP(ILogger<JsonOP> logger) : IDisposable {
+		private readonly ILogger<JsonOP> _logger = logger;
 
 		#region path strings
 		private readonly string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}Config{Path.DirectorySeparatorChar}config.json";
@@ -14,13 +13,8 @@ namespace EGSFreeGamesNotifier.Services {
 
 		#region debug strings
 		private readonly string debugWrite = "Write records";
-		private readonly string debugLoadConfig = "Load config";
 		private readonly string debugLoadRecords = "Load previous records";
 		#endregion
-
-		public JsonOP(ILogger<JsonOP> logger) {
-			_logger = logger;
-		}
 
 		internal void WriteData(List<FreeGameRecord> data) {
 			try {
@@ -51,17 +45,6 @@ namespace EGSFreeGamesNotifier.Services {
 			}
 		}
 
-		internal Config LoadConfig() {
-			try {
-				_logger.LogDebug(debugLoadConfig);
-				var content = JsonSerializer.Deserialize<Config>(File.ReadAllText(configPath));
-				_logger.LogDebug($"Done: {debugLoadConfig}");
-				return content;
-			} catch (Exception) {
-				_logger.LogError($"Error: {debugLoadConfig}");
-				throw;
-			}
-		}
 		public void Dispose() {
 			GC.SuppressFinalize(this);
 		}

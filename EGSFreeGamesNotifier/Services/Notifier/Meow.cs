@@ -1,24 +1,22 @@
 ﻿using EGSFreeGamesNotifier.Models.Config;
+using EGSFreeGamesNotifier.Models.PostContent;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
 using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.PostContent;
-using System.Text.Json;
+using Microsoft.Extensions.Options;
 using System.Text;
+using System.Text.Json;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class Meow: INotifiable {
-		private readonly ILogger<Meow> _logger;
+	internal class Meow(ILogger<Meow> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<Meow> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Meow";
 		#endregion
 
-		public Meow(ILogger<Meow> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

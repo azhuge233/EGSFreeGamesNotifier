@@ -1,23 +1,21 @@
-﻿using Microsoft.Extensions.Logging;
-using EGSFreeGamesNotifier.Models.Config;
+﻿using EGSFreeGamesNotifier.Models.Config;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Text;
 using System.Web;
 
 namespace EGSFreeGamesNotifier.Services.Notifier {
-	internal class Bark: INotifiable {
-		private readonly ILogger<Bark> _logger;
+	internal class Bark(ILogger<Bark> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<Bark> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Bark";
 		#endregion
 
-		public Bark(ILogger<Bark> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<NotifyRecord> records) {
+		public async Task SendMessage(List<NotifyRecord> records) {
 			try {
 				string url = new StringBuilder().AppendFormat(NotifyFormatStrings.barkUrlFormat, config.BarkAddress, config.BarkToken).ToString();
 				using var client = new HttpClient();
