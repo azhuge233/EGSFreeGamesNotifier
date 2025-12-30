@@ -28,7 +28,7 @@
 			{ OfferTypeBundle, 2 }, 
 			{ OfferTypeAddOn, 1 },
 			{ OfferTypeEdition, 1 },
-			{ OfferTypeOthers, 1}
+			{ OfferTypeOthers, 0 }
 		};
 		#endregion
 
