@@ -28,7 +28,11 @@
 			{ OfferTypeBundle, 2 }, 
 			{ OfferTypeAddOn, 1 },
 			{ OfferTypeEdition, 1 },
-			{ OfferTypeOthers, 0 }
+			// OTHERS type games's url prefix should be https://store.epicgames.com/p/
+			// so we map it to 1, but it may not always be correct
+			// sometimes epic adds a prefix in the urlSlug for OTHERS type games
+			// eg: bundles/trine-classic-collection, happened on 2025-12-31 christmas free games
+			{ OfferTypeOthers, 1 } 
 		};
 		#endregion
 
