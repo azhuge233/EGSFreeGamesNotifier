@@ -7,18 +7,37 @@ namespace EGSFreeGamesNotifier.Services {
 
 		internal HttpClient Client { get; set; } = new HttpClient();
 
-		internal async Task<string> GetSource() {
+		internal async Task<Tuple<string, string>> GetSource() {
 			try {
-				_logger.LogDebug(ScrapeStrings.debugGetSource);
+				_logger.LogDebug(ScrapeStrings.debugGetWeeklyFreeGameSource);
+				var weeklyFreeGameSource = await GetSourceWithHttpClient(ScrapeStrings.EGSUrl);
+				_logger.LogDebug($"Done: {ScrapeStrings.debugGetWeeklyFreeGameSource}");
 
-				_logger.LogDebug(ScrapeStrings.debugGetSourceWithUrl, ScrapeStrings.EGSUrl);
-				var response = await Client.GetAsync(ScrapeStrings.EGSUrl);
-				var result = await response.Content.ReadAsStringAsync();
+				_logger.LogDebug(ScrapeStrings.debugGetGraphQLSource);
+				var graphQLUrl = $"{ScrapeStrings.EGSGraphQLUrl}?{ScrapeStrings.EGSGraphQLQueryParam}";
+				var graphQLSource =  await GetSourceWithHttpClient(graphQLUrl);
+				_logger.LogDebug($"Done: {ScrapeStrings.debugGetGraphQLSource}");
 
-				_logger.LogDebug($"Done: {ScrapeStrings.debugGetSource}");
-				return result;
+				return new (weeklyFreeGameSource, graphQLSource);
 			} catch (Exception) {
 				_logger.LogError($"Error: {ScrapeStrings.debugGetSource}");
+				throw;
+			} finally {
+				Dispose();
+			}
+		}
+
+		private async Task<string> GetSourceWithHttpClient(string url) {
+			try {
+				_logger.LogDebug(ScrapeStrings.debugGetSourceWithUrl, url);
+
+				var response = await Client.GetAsync(url);
+				var result = await response.Content.ReadAsStringAsync();
+
+				_logger.LogDebug($"Done: {ScrapeStrings.debugGetSourceWithUrl}", url);
+				return result;
+			} catch (Exception) {
+				_logger.LogError($"Error: {ScrapeStrings.debugGetSourceWithUrl}", url);
 				throw;
 			} finally {
 				Dispose();

@@ -7,6 +7,8 @@
 
 		#region debug strings
 		internal static readonly string debugGetSource = "Get source";
+		internal static readonly string debugGetWeeklyFreeGameSource = "Get weekly free game source";
+		internal static readonly string debugGetGraphQLSource = "Get GraphQL source";
 		internal static readonly string debugGetSourceWithUrl = "Getting source: {0}";
 		#endregion
 	}
