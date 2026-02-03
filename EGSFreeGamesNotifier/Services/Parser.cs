@@ -4,15 +4,34 @@ using EGSFreeGamesNotifier.Models.EGSJsonData;
 using EGSFreeGamesNotifier.Models.Record;
 using EGSFreeGamesNotifier.Strings;
 using System.Text.Json;
+using EGSFreeGamesNotifier.Models.GraphQL;
 
 namespace EGSFreeGamesNotifier.Services {
 	internal class Parser(ILogger<Parser> logger) : IDisposable {
 		private readonly ILogger<Parser> _logger = logger;
 
-		internal ParseResult Parse(string source, List<FreeGameRecord> oldRecords) {
+		internal ParseResult Parse(Tuple<string, string> source, List<FreeGameRecord> oldRecords) {
 			try {
 				_logger.LogDebug(ParseStrings.debugParse);
+
 				var result = new ParseResult();
+
+				ParseWeeklyFreeGame(source.Item1, oldRecords, result);
+				ParseGraphQLFreeGame(source.Item2, oldRecords, result);
+
+				_logger.LogDebug($"Done: {ParseStrings.debugParse}");
+				return result;
+			} catch (Exception) {
+				_logger.LogError($"Error: {ParseStrings.debugParse}");
+				throw;
+			} finally {
+				Dispose();
+			}
+		}
+
+		private void ParseWeeklyFreeGame(string source, List<FreeGameRecord> oldRecords, ParseResult result) {
+			try {
+				_logger.LogDebug(ParseStrings.debugParseWeekly);
 
 				var jsonData = JsonSerializer.Deserialize<EGSJsonData>(source);
 
@@ -24,7 +43,7 @@ namespace EGSFreeGamesNotifier.Services {
 						}
 
 						#region get new record basic info
-						var newRecord = new FreeGameRecord() { 
+						var newRecord = new FreeGameRecord() {
 							Title = game.Title,
 							Name = GetProductSlug(game),
 							Description = game.Description,
@@ -88,20 +107,84 @@ namespace EGSFreeGamesNotifier.Services {
 					}
 				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
 
-				if(result.NotifyRecords.Count > 0)
+				if (result.NotifyRecords.Count > 0)
 					result.NotifyRecords = [.. result.NotifyRecords.OrderBy(record => record.IsUpcomingPromotion)];
 
-				_logger.LogDebug($"Done: {ParseStrings.debugParse}");
-				return result;
+				_logger.LogDebug($"Done: {ParseStrings.debugParseWeekly}");
 			} catch (Exception) {
-				_logger.LogError($"Error: {ParseStrings.debugParse}");
+				_logger.LogError($"Error: {ParseStrings.debugParseWeekly}");
 				throw;
 			} finally {
 				Dispose();
 			}
 		}
 
-		private static string GetProductSlug(Element_ game) {
+		private void ParseGraphQLFreeGame(string source, List<FreeGameRecord> oldRecords, ParseResult result) {
+			try {
+				_logger.LogDebug(ParseStrings.debugParseGraphQL);
+
+				var jsonData = JsonSerializer.Deserialize<GraphQLJsonData>(source);
+
+				if (jsonData != null) {
+					foreach (var game in jsonData.Data.Catalog.SearchStore.Elements) { 
+						if (game.Promotions == null) {
+							_logger.LogDebug(ParseStrings.debugGameNullPromotion, game.Title);
+							continue;
+						}
+
+						#region get new record basic info
+						var newRecord = new FreeGameRecord() {
+							Title = game.Title,
+							Name = GetProductSlug(game),
+							Description = game.Description,
+							ID = game.ID,
+							Namespace = game.Namespace,
+							OfferType = ParseStrings.OfferTypeGraphQLFreeGame
+						};
+						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(newRecord.OfferType, 1)]}{newRecord.Name}";
+						newRecord.PurchaseUrl = string.Format(ParseStrings.PurchaseBaseUrl, newRecord.Namespace, newRecord.ID);
+						#endregion
+
+						#region check if appears in weekly free games
+						if(result.Records.Any(rec => rec.ID == newRecord.ID) || result.NotifyRecords.Any(rec => rec.ID == newRecord.ID)) {
+							_logger.LogDebug(ParseStrings.debugFoundInWeeklyGames, game.Title);
+							continue;
+						}
+						#endregion
+
+						#region deal with promotion time
+						if (game.Promotions.PromotionalOffers.Count > 0 && game.Promotions.PromotionalOffers.First().PromotionalOffers.Any(offer => offer.DiscountSetting.DiscountPercentage == 0)) {
+							var offer = game.Promotions.PromotionalOffers.First().PromotionalOffers.First(offer => offer.DiscountSetting.DiscountPercentage == 0);
+							newRecord.StartTime = offer.StartDate.AddHours(8);
+							// handles end time null
+							newRecord.EndTime = !offer.EndDate.HasValue ? DateTime.MaxValue : offer.EndDate.Value.AddHours(8);
+						} else {
+							_logger.LogDebug(ParseStrings.debugGameNoPromotion, game.Title);
+							continue;
+						}
+						#endregion
+
+						result.Records.Add(newRecord);
+
+						#region decide if notify
+						if (!oldRecords.Any(record => record.ID == newRecord.ID)) {
+							_logger.LogInformation(ParseStrings.infoFoundNewGame, newRecord.Title, newRecord.OfferType);
+							result.NotifyRecords.Add(new NotifyRecord(newRecord));
+						} else _logger.LogDebug(ParseStrings.debugFoundInOldRecords, game.Title, newRecord.OfferType);
+						#endregion
+					}
+				} else _logger.LogDebug(ParseStrings.debugJsonDataNull);
+
+				_logger.LogDebug($"Done: {ParseStrings.debugParseGraphQL}");
+			} catch (Exception) {
+				_logger.LogError($"Error: {ParseStrings.debugParseGraphQL}");
+				throw;
+			} finally {
+				Dispose();
+			}
+		}
+
+		private static string GetProductSlug(Models.EGSJsonData.Element_ game) {
 			string gameName = string.Empty;
 
 			// return offerMappings value if free game is add on or type "edition"
@@ -122,6 +205,26 @@ namespace EGSFreeGamesNotifier.Services {
 
 				gameName = gameNameList.GroupBy(name => name).MaxBy(gp => gp.Count()).Key;
 			}
+
+			return gameName;
+		}
+
+		private static string GetProductSlug(Models.GraphQL.Element_ game) {
+			string gameName = string.Empty;
+
+			// GraphQL data does not have offerType, so always get the most frequent value
+			List<string> gameNameList = [];
+
+			if (!string.IsNullOrEmpty(game.UrlSlug)) gameNameList.Add(game.UrlSlug);
+			if (!string.IsNullOrEmpty(game.ProductSlug)) gameNameList.Add(game.ProductSlug);
+			if (game.CatalogNs.Mappings != null && game.CatalogNs.Mappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+				gameNameList.Add(game.CatalogNs.Mappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug);
+			if (game.OfferMappings != null && game.OfferMappings.Any(map => map.PageType == ParseStrings.UrlProductSlugPageType))
+				gameNameList.Add(game.OfferMappings.First(map => map.PageType == ParseStrings.UrlProductSlugPageType).PageSlug);
+			if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
+				gameNameList.Add(game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value);
+
+			gameName = gameNameList.GroupBy(name => name).MaxBy(gp => gp.Count()).Key;
 
 			return gameName;
 		}

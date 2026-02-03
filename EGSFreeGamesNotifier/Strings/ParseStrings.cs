@@ -10,6 +10,8 @@
 		internal static readonly string OfferTypeAddOn = "ADD_ON";
 		internal static readonly string OfferTypeEdition = "EDITION";
 		internal static readonly string OfferTypeOthers = "OTHERS";
+		// not weekly free game offerType, used in GraphQL free games api
+		internal static readonly string OfferTypeGraphQLFreeGame = "FREE_GAME";
 		#endregion
 
 		internal static readonly string SellerDevAccountID = "o-ufmrk5furrrxgsp5tdngefzt5rxdcn";
@@ -32,7 +34,9 @@
 			// so we map it to 1, but it may not always be correct
 			// sometimes epic adds a prefix in the urlSlug for OTHERS type games
 			// eg: bundles/trine-classic-collection, happened on 2025-12-31 christmas free games
-			{ OfferTypeOthers, 1 } 
+			{ OfferTypeOthers, 1 },
+			// GraphQL free games use the same url prefix as BASE_GAME
+			{ OfferTypeGraphQLFreeGame, 1 }
 		};
 		#endregion
 
@@ -40,7 +44,8 @@
 
 		#region debug strings
 		internal static readonly string debugParse = "Parse";
-		internal static readonly string debugParseWithUrl = "Parsing: {0}";
+		internal static readonly string debugParseWeekly = "Parse Weekly Free Game";
+		internal static readonly string debugParseGraphQL = "Parse GraphQL Free Games";
 
 		internal static readonly string debugJsonDataNull = "Json Data Null";
 
@@ -51,6 +56,7 @@
 
 		internal static readonly string infoFoundNewGame = "Found new free game: {0} | offerType: {1}";
 		internal static readonly string debugFoundInOldRecords = "Found {0} in old records, stop adding to push list | offerType: {1}";
+		internal static readonly string debugFoundInWeeklyGames = "Found {0} in weekly games, stop adding to push list";
 
 		internal static readonly string debugMysteryGameFound = "Found mystery game: {0}";
 		internal static readonly string debugDevAccountFound = "Found dev account game: {0}";
