@@ -14,7 +14,7 @@ namespace EGSFreeGamesNotifier.Services {
 				_logger.LogDebug(ParseStrings.debugParse);
 				var result = new ParseResult();
 
-				var jsonData = JsonSerializer.Deserialize<JsonData>(source);
+				var jsonData = JsonSerializer.Deserialize<EGSJsonData>(source);
 
 				if (jsonData != null) {
 					foreach (var game in jsonData.Data.Catalog.SearchStore.Elements) {

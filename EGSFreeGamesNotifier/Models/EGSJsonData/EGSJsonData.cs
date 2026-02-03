@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace EGSFreeGamesNotifier.Models.EGSJsonData {
-	public class JsonData {
+	public class EGSJsonData {
 		[JsonPropertyName("data")]
 		public Data_ Data { get; set; }
 	}
