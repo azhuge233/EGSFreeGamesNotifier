@@ -141,6 +141,7 @@ namespace EGSFreeGamesNotifier.Services {
 							Namespace = game.Namespace,
 							OfferType = ParseStrings.OfferTypeGraphQLFreeGame
 						};
+
 						newRecord.Url = $"{ParseStrings.EGSUrlPres[ParseStrings.OfferTypesToUrlPrefix.GetValueOrDefault(newRecord.OfferType, 1)]}{newRecord.Name}";
 						newRecord.PurchaseUrl = string.Format(ParseStrings.PurchaseBaseUrl, newRecord.Namespace, newRecord.ID);
 						#endregion
@@ -149,6 +150,14 @@ namespace EGSFreeGamesNotifier.Services {
 						if(result.Records.Any(rec => rec.ID == newRecord.ID) || result.NotifyRecords.Any(rec => rec.ID == newRecord.ID)) {
 							_logger.LogDebug(ParseStrings.debugFoundInWeeklyGames, game.Title);
 							continue;
+						}
+						#endregion
+
+						#region dev account
+						if (game.Seller.ID == ParseStrings.SellerDevAccountID || string.Equals(game.Seller.Name, ParseStrings.SellerDevAccountName, StringComparison.OrdinalIgnoreCase)) {
+							newRecord.IsDevAccount = true;
+							newRecord.PurchaseUrl = string.Empty;
+							_logger.LogDebug(ParseStrings.debugDevAccountFound, game.Title);
 						}
 						#endregion
 
