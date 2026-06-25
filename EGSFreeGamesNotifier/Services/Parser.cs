@@ -212,7 +212,7 @@ namespace EGSFreeGamesNotifier.Services {
 				if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
 					gameNameList.Add(game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value);
 
-				gameName = gameNameList.GroupBy(name => name).MaxBy(gp => gp.Count()).Key;
+				gameName = gameNameList.GroupBy(name => name).OrderByDescending(gp => gp.Count()).ThenBy(gp => gp.Key.Contains('/')).First().Key;
 			}
 
 			return gameName;
@@ -233,7 +233,7 @@ namespace EGSFreeGamesNotifier.Services {
 			if (game.CustomAttributes != null && game.CustomAttributes.Any(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey))
 				gameNameList.Add(game.CustomAttributes.First(pair => pair.Key == ParseStrings.CustomAttrProductSlugKey).Value);
 
-			gameName = gameNameList.GroupBy(name => name).MaxBy(gp => gp.Count()).Key;
+			gameName = gameNameList.GroupBy(name => name).OrderByDescending(gp => gp.Count()).ThenBy(gp => gp.Key.Contains('/')).First().Key;
 
 			return gameName;
 		}
