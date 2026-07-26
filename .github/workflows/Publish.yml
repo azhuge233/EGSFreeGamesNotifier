@@ -31,10 +31,29 @@ jobs:
         dotnet publish -c release -r win-x64 -p:PublishDir="$env:GITHUB_WORKSPACE\Release\win-x64" --sc --nologo
         Compress-Archive -Path "$env:GITHUB_WORKSPACE\Release\win-x64" -DestinationPath "EGS-win-x64.zip"
     
-    - name: Create Release
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        prerelease: false
-        files: ./*.zip
+    - name: Recreate Latest Release
+      shell: pwsh
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        $ErrorActionPreference = "Stop"
+
+        Write-Host "Deleting existing Release..."
+
+        try {
+          gh release delete latest --yes --cleanup-tag
+        }
+        catch {
+          Write-Host "Release 'latest' does not exist."
+        }
+
+        git tag -d latest 2>$null
+
+        Write-Host "Creating new Release..."
+
+        gh release create latest `
+          EGS-win-x64.zip `
+          --target $env:GITHUB_SHA `
+          --title "Latest" `
+          --notes "" `
+          --latest
